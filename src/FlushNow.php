@@ -5,7 +5,8 @@ namespace Sunnysideup\Flush;
 use SilverStripe\ORM\DB;
 use SilverStripe\Control\Director;
 
-trait FlushNow {
+trait FlushNow
+{
 
 
     /**
@@ -18,8 +19,8 @@ trait FlushNow {
      **/
     public static function flushNow($message, $type = '', $bullet = true)
     {
-        if(is_array($message)) {
-            $message = print_r($message);
+        if (is_array($message)) {
+            $message = print_r($message, 1);
         }
         echo '';
         // check that buffer is actually set before flushing
@@ -52,5 +53,4 @@ trait FlushNow {
     {
         $this->flushNow('--------------------------------------------------------');
     }
-
 }
