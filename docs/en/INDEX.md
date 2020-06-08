@@ -15,3 +15,21 @@ class MyClass
     }
 
 }
+
+```
+
+and then you can also do:
+
+```php
+
+use MyClass;
+
+class AnotherClass
+{    
+    protected function doSomething()
+    {
+        MyClass::flushNow('I did it', 'created');
+    }
+
+}
+```
