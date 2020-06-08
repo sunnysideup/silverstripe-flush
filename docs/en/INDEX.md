@@ -11,7 +11,9 @@ class MyClass
     
     protected function doSomething()
     {
+        self::flushNowLine();
         self::flushNow('I did it', 'created');
+        self::flushNowLine();
     }
 
 }
