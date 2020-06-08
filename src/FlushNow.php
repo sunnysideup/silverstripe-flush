@@ -49,7 +49,7 @@ trait FlushNow
      * @param boolean $bullet add a bullet to message?
      *
      **/
-    protected function flushNowLine()
+    public static function flushNowLine()
     {
         $this->flushNow('--------------------------------------------------------');
     }
