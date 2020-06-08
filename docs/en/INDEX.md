@@ -1,8 +1,8 @@
-# what does it do:
+# what does it do?
 
-Sends a message directly to the command line / screen akin to DB::alteration_message.
+Sends a message directly to the command line / screen akin to `DB::alteration_message`.
 
-# how to use it:
+# how to use it?
 ```php
 use Sunnysideup\Flush\FlushNow;
 class MyClass
