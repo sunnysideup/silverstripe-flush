@@ -2,11 +2,23 @@
 
 namespace Sunnysideup\Flush;
 
-use SilverStripe\ORM\DB;
 use SilverStripe\Control\Director;
+use SilverStripe\ORM\DB;
 
 trait FlushNow
 {
+    /**
+     * Show a message about task currently running
+     *
+     * @param string $message to display
+     * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
+     * @param boolean $bullet add a bullet to message?
+     *
+     **/
+    public static function flushNowLine()
+    {
+        $this->flushNow('--------------------------------------------------------');
+    }
 
     /**
      * Show a message about task currently running
@@ -37,19 +49,5 @@ trait FlushNow
         } else {
             echo $message;
         }
-    }
-
-
-    /**
-     * Show a message about task currently running
-     *
-     * @param string $message to display
-     * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
-     * @param boolean $bullet add a bullet to message?
-     *
-     **/
-    public static function flushNowLine()
-    {
-        $this->flushNow('--------------------------------------------------------');
     }
 }
