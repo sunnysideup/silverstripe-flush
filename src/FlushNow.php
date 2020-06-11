@@ -8,7 +8,6 @@ use SilverStripe\Control\Director;
 trait FlushNow
 {
 
-
     /**
      * Show a message about task currently running
      *
@@ -17,7 +16,7 @@ trait FlushNow
      * @param boolean $bullet add a bullet to message?
      *
      **/
-    public static function flushNow($message, $type = '', $bullet = true)
+    protected static function flushNow($message, $type = '', $bullet = true)
     {
         if (is_array($message)) {
             $message = print_r($message, 1);
