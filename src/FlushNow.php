@@ -8,12 +8,7 @@ use SilverStripe\ORM\DB;
 trait FlushNow
 {
     /**
-     * Show a message about task currently running
-     *
-     * @param string $message to display
-     * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
-     * @param boolean $bullet add a bullet to message?
-     *
+     * output a line
      **/
     public static function flushNowLine()
     {
@@ -21,7 +16,7 @@ trait FlushNow
     }
 
     /**
-     * Show a message about task currently running
+     * output a message to command line or screen
      *
      * @param string $message to display
      * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
