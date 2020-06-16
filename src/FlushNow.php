@@ -14,7 +14,7 @@ trait FlushNow
      **/
     protected function flushNowLine()
     {
-        self::flushStatic('--------------------------------------------------------');
+        self::do_flush('--------------------------------------------------------');
     }
 
     /**
@@ -27,10 +27,10 @@ trait FlushNow
      **/
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
     {
-        self::flushStatic($message, $type, $bullet);
+        self::do_flush($message, $type, $bullet);
     }
 
-    public static function flushStatic(string $message, ?string $type = '', ?bool $bullet = true)
+    public static function do_flush(string $message, ?string $type = '', ?bool $bullet = true)
     {
         if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
