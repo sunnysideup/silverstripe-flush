@@ -30,8 +30,8 @@ trait FlushNow
      **/
     protected static function flushNow($message, $type = '', $bullet = true)
     {
-        if (is_array($message)) {
-            $message = print_r($message, 1);
+        if (is_string($message)) {
+            $message = '<pre>' . print_r($message, 1) . '</pre>';
         }
         echo '';
         // check that buffer is actually set before flushing
