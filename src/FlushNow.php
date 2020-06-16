@@ -12,7 +12,7 @@ trait FlushNow
      **/
     public static function flushNowLine()
     {
-        $this->flushNow('--------------------------------------------------------');
+        self::flushNow('--------------------------------------------------------');
     }
 
     /**
