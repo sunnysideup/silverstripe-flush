@@ -27,7 +27,7 @@ trait FlushNow
      **/
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
     {
-        if (is_string($message)) {
+        if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
         }
         echo '';
