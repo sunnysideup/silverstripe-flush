@@ -25,7 +25,7 @@ trait FlushNow
      * @param boolean $bullet add a bullet to message?
      *
      **/
-    protected function flushNow($message, $type = '', $bullet = true)
+    protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
     {
         if (is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
