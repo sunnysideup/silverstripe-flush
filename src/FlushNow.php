@@ -7,14 +7,14 @@ use SilverStripe\ORM\DB;
 
 trait FlushNow
 {
-    
-       
+
+
     /**
      * output a line
      **/
     protected function flushNowLine()
     {
-        self::flushNow('--------------------------------------------------------');
+        self::flushStatic('--------------------------------------------------------');
     }
 
     /**
@@ -26,6 +26,11 @@ trait FlushNow
      *
      **/
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
+    {
+        self::flushStatic($message, $type, $bullet);
+    }
+
+    public static function flushStatic(string $message, ?string $type = '', ?bool $bullet = true)
     {
         if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
