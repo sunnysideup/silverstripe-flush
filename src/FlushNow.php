@@ -10,7 +10,7 @@ trait FlushNow
     /**
      * output a line
      **/
-    public static function flushNowLine()
+    protected function flushNowLine()
     {
         self::flushNow('--------------------------------------------------------');
     }
@@ -23,7 +23,7 @@ trait FlushNow
      * @param boolean $bullet add a bullet to message?
      *
      **/
-    protected static function flushNow($message, $type = '', $bullet = true)
+    protected function flushNow($message, $type = '', $bullet = true)
     {
         if (is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
