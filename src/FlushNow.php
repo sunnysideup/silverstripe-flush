@@ -7,6 +7,8 @@ use SilverStripe\ORM\DB;
 
 trait FlushNow
 {
+    
+       
     /**
      * output a line
      **/
