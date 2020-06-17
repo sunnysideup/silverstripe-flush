@@ -45,11 +45,38 @@ trait FlushNow
         @ob_start();
         if (Director::is_cli()) {
             $message = strip_tags($message);
+        } else {
+            $message = '<div style="color: '.self::flush_now_type_to_colour($type).'">'.$message.'</div>';
         }
         if ($bullet) {
             DB::alteration_message($message, $type);
         } else {
             echo $message;
+        }
+    }
+
+    private static function flush_now_type_to_colour($type)
+    {
+        switch ($type) {
+            case 'created':
+            case 'good':
+                return 'green';
+
+            case 'changed':
+            case 'info':
+                return 'orange';
+
+            case 'obsolete':
+                return 'purple';
+
+            case 'repaired':
+                return 'blue';
+
+            case 'deleted':
+            case 'bad':
+                return 'red';
+            default:
+                return 'black';
         }
     }
 }
