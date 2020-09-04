@@ -45,7 +45,7 @@ trait FlushNow
      *
      * @param string $message to display
      * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
-     * @param boolean $bullet add a bullet to message?
+     * @param bool $bullet add a bullet to message?
      *
      **/
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
