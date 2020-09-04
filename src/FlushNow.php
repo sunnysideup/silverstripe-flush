@@ -7,7 +7,30 @@ use SilverStripe\ORM\DB;
 
 trait FlushNow
 {
-
+    public static function do_flush(string $message, ?string $type = '', ?bool $bullet = true)
+    {
+        if (! is_string($message)) {
+            $message = '<pre>' . print_r($message, 1) . '</pre>';
+        }
+        echo '';
+        // check that buffer is actually set before flushing
+        if (ob_get_length()) {
+            @ob_flush();
+            @flush();
+            @ob_end_flush();
+        }
+        @ob_start();
+        if (Director::is_cli()) {
+            $message = strip_tags($message);
+        } else {
+            $message = '<div style="color: ' . self::flush_now_type_to_colour($type) . '">' . $message . '</div>';
+        }
+        if ($bullet) {
+            DB::alteration_message($message, $type);
+        } else {
+            echo $message;
+        }
+    }
 
     /**
      * output a line
@@ -28,31 +51,6 @@ trait FlushNow
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
     {
         self::do_flush($message, $type, $bullet);
-    }
-
-    public static function do_flush(string $message, ?string $type = '', ?bool $bullet = true)
-    {
-        if (! is_string($message)) {
-            $message = '<pre>' . print_r($message, 1) . '</pre>';
-        }
-        echo '';
-        // check that buffer is actually set before flushing
-        if (ob_get_length()) {
-            @ob_flush();
-            @flush();
-            @ob_end_flush();
-        }
-        @ob_start();
-        if (Director::is_cli()) {
-            $message = strip_tags($message);
-        } else {
-            $message = '<div style="color: '.self::flush_now_type_to_colour($type).'">'.$message.'</div>';
-        }
-        if ($bullet) {
-            DB::alteration_message($message, $type);
-        } else {
-            echo $message;
-        }
     }
 
     private static function flush_now_type_to_colour($type)
