@@ -23,7 +23,7 @@ trait FlushNow
         if (Director::is_cli()) {
             $message = strip_tags($message);
         } else {
-            $message = '<div style="color: ' . self::flush_now_type_to_colour($type) . '">' . $message . '</div>';
+            $message = '<span style="color: ' . self::flush_now_type_to_colour($type) . '">' . $message . '</span>';
         }
         if ($bullet) {
             DB::alteration_message($message, $type);
