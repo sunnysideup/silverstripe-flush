@@ -33,21 +33,20 @@ trait FlushNow
     }
 
     /**
-     * output a line
-     **/
+     * output a line.
+     */
     protected function flushNowLine()
     {
         self::do_flush('--------------------------------------------------------');
     }
 
     /**
-     * output a message to command line or screen
+     * output a message to command line or screen.
      *
      * @param string $message to display
-     * @param string $type one of [created|changed|repaired|obsolete|deleted|error]
-     * @param bool $bullet add a bullet to message?
-     *
-     **/
+     * @param string $type    one of [created|changed|repaired|obsolete|deleted|error]
+     * @param bool   $bullet  add a bullet to message?
+     */
     protected function flushNow(string $message, ?string $type = '', ?bool $bullet = true)
     {
         self::do_flush($message, $type, $bullet);
@@ -59,17 +58,13 @@ trait FlushNow
             case 'created':
             case 'good':
                 return 'green';
-
             case 'changed':
             case 'info':
                 return 'orange';
-
             case 'obsolete':
                 return 'purple';
-
             case 'repaired':
                 return 'blue';
-
             case 'deleted':
             case 'bad':
                 return 'red';
