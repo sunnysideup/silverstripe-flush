@@ -20,26 +20,26 @@ trait FlushNow
             @ob_end_flush();
         }
         @ob_start();
+        $colour = self::flush_now_type_to_colour($type);
         if (Director::is_cli()) {
-            $colour = self::flush_now_type_to_colour($type, false);
-            $colour = $this->getColour($colour, false);
+            $colour = self::getColour($colour, false);
             $outputString = "\033[" . $colour . strip_tags($message) . "\033[0m";
         } else {
-            $colour = self::flush_now_type_to_colour($type, true);
+            $colour = self::getColour($colour, true);
             $message = '<span style="color: ' .  $colour. '">' . $message . '</span>';
         }
         if ($bullet) {
             DB::alteration_message($message, $type);
         } else {
-            echo $message;
+            echo $message."\n";
         }
     }
 
     public static function do_flush_heading(string $message)
     {
-        self::do_flush('--------------------------------------------------------');
-        self::do_flush($message, '', 'heading');
-        self::do_flush('--------------------------------------------------------');
+        self::do_flush('--------------------------------------------------------', 'heading', false);
+        self::do_flush($message, 'heading', false);
+        self::do_flush('--------------------------------------------------------', 'heading', false);
 
     }
 
@@ -89,7 +89,7 @@ trait FlushNow
 
 
 
-    protected function getColour(string $colour, ?bool $usehtmlColour = false)
+    protected static function getColour(string $colour, ?bool $usehtmlColour = false)
     {
         $htmlColour = str_replace('_', '', $colour);
         $htmlColour = str_replace('-', '', $htmlColour);
