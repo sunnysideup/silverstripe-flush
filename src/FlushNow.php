@@ -9,32 +9,32 @@ trait FlushNow
 {
     public static function do_flush(string $message, ?string $type = '', ?bool $bullet = true)
     {
+        $isCli = Director::is_cli();
         if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
         }
-        echo '';
-        // check that buffer is actually set before flushing
-        if (ob_get_length()) {
-            @ob_flush();
-            @flush();
-            @ob_end_flush();
+        if(! $isCli) {
+            self::flushBuffer();
         }
-        @ob_start();
         $colour = self::flush_now_type_to_colour($type);
-        if (Director::is_cli()) {
-            $colour = self::getColour($colour, false);
-            $outputString = "\033[" . $colour . strip_tags($message) . "\033[0m";
+        $colour = self::getColour($colour, $isCli);
+        if ($isCli) {
+            $outputString = "\033[" . $colour . ' '.strip_tags($message) . "\033[0m";
         } else {
-            $colour = self::getColour($colour, true);
             $message = '<span style="color: ' .  $colour. '">' . $message . '</span>';
         }
+        if($isCli && $type) {
+            $bullet = false;
+        }
         if ($bullet) {
-            if(Director::is_cli() && $type) {
-                echo $message."\n";
-            }
             DB::alteration_message($message, $type);
         } else {
-            echo $message;
+            if($isCli) {
+                echo "\n" . $message;
+            } else {
+                echo '<hr/>';
+                echo $message;
+            }
         }
     }
 
@@ -43,7 +43,18 @@ trait FlushNow
         self::do_flush('--------------------------------------------------------', 'heading', false);
         self::do_flush($message, 'heading', false);
         self::do_flush('--------------------------------------------------------', 'heading', false);
+    }
 
+    protected static function flushBuffer()
+    {
+        echo '';
+    // check that buffer is actually set before flushing
+        if (ob_get_length()) {
+            @ob_flush();
+            @flush();
+            @ob_end_flush();
+        }
+        @ob_start();
     }
 
     /**
@@ -92,10 +103,12 @@ trait FlushNow
 
 
 
-    protected static function getColour(string $colour, ?bool $usehtmlColour = false)
+    protected static function getColour(string $colour, ?bool $isCli = true) : string
     {
-        $htmlColour = str_replace('_', '', $colour);
-        $htmlColour = str_replace('-', '', $htmlColour);
+        if(! $isCli) {
+            $htmlColour = str_replace('_', '', $colour);
+            $htmlColour = str_replace('-', '', $htmlColour);
+        }
         switch ($colour) {
             case 'black':
                 $colour = '0;30m';
@@ -156,10 +169,10 @@ trait FlushNow
                 $colour = '1;30m';
                 $htmlColour = '#555';
         }
-        if ($usehtmlColour) {
-            return $htmlColour;
+        if ($isCli) {
+            return $colour;
         }
-        return $colour;
+        return $htmlColour;
     }
 
 
