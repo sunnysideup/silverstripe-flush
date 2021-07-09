@@ -32,6 +32,14 @@ trait FlushNow
         }
     }
 
+    public static function do_flush_heading(string $message)
+    {
+        self::do_flush('--------------------------------------------------------');
+        self::do_flush($message, '', 'heading');
+        self::do_flush('--------------------------------------------------------');
+
+    }
+
     /**
      * output a line.
      */
@@ -68,6 +76,8 @@ trait FlushNow
             case 'deleted':
             case 'bad':
                 return 'red';
+            case 'heading':
+                return 'orange';
             default:
                 return 'black';
         }
