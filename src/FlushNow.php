@@ -29,9 +29,12 @@ trait FlushNow
             $message = '<span style="color: ' .  $colour. '">' . $message . '</span>';
         }
         if ($bullet) {
+            if(Director::is_cli() && $type) {
+                echo $message."\n";
+            }
             DB::alteration_message($message, $type);
         } else {
-            echo $message."\n";
+            echo $message;
         }
     }
 
