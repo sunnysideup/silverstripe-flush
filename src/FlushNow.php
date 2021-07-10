@@ -17,16 +17,13 @@ trait FlushNow
             self::flushBuffer();
         }
         $colour = self::flush_now_type_to_colour($type);
-        $colour = self::getColour($colour, $isCli);
+        $colour = self::flush_now_colour_for_mode($colour, $isCli);
         if ($isCli) {
-            $outputString = "\033[" . $colour . ' '.strip_tags($message) . "\033[0m";
+            $message = "\033[" . $colour . ' '.strip_tags($message) . "\033[0m";
         } else {
             $message = '<span style="color: ' .  $colour. '">' . $message . '</span>';
         }
-        if($isCli && $type) {
-            $bullet = false;
-        }
-        if ($bullet) {
+        if ($bullet && !$isCli) {
             DB::alteration_message($message, $type);
         } else {
             if($isCli) {
@@ -97,13 +94,13 @@ trait FlushNow
             case 'heading':
                 return 'pink';
             default:
-                return 'black';
+                return '';
         }
     }
 
 
 
-    protected static function getColour(string $colour, ?bool $isCli = true) : string
+    protected static function flush_now_colour_for_mode(string $colour, ?bool $isCli = true) : string
     {
         if(! $isCli) {
             $htmlColour = str_replace('_', '', $colour);
@@ -143,11 +140,6 @@ trait FlushNow
             case 'purple':
                 $colour = '0;35m';
                 break;
-            case 'run':
-            case 'light_purple':
-                $colour = '1;35m';
-                $htmlColour = 'violet';
-                break;
             case 'brown':
                 $colour = '0;33m';
                 break;
@@ -165,9 +157,17 @@ trait FlushNow
                 break;
             case 'dark_gray':
             case 'notice':
-            default:
                 $colour = '1;30m';
                 $htmlColour = '#555';
+                break;
+            case 'run':
+            case 'light_purple':
+                $colour = '1;35m';
+                $htmlColour = 'violet';
+                break;
+            default:
+                $colour = '1;37m';
+                break;
         }
         if ($isCli) {
             return $colour;
