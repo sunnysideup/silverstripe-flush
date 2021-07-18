@@ -74,10 +74,8 @@ trait FlushNow
 
     protected static function flush_now_colour_for_mode(string $colour, ?bool $isCli = true): string
     {
-        if (! $isCli) {
-            $htmlColour = str_replace('_', '', $colour);
-            $htmlColour = str_replace('-', '', $htmlColour);
-        }
+        $htmlColour = str_replace('_', '', $colour);
+        $htmlColour = str_replace('-', '', $htmlColour);
         switch ($colour) {
             case 'black':
                 $colour = '0;30m';
