@@ -37,3 +37,15 @@ class AnotherClass
 ```
 
 _note that we make use of FlushNow Trait added to MyClass_
+
+Type options are:
+ -  created  
+ -  good  
+ -  changed  
+ -  info  
+ -  obsolete  
+ -  repaired  
+ -  deleted  
+ -  error  
+ -  bad  
+ -  heading  
