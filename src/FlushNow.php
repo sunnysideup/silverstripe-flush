@@ -163,7 +163,7 @@ trait FlushNow
         return $htmlColour;
     }
 
-    private static function flush_now_type_to_colour($type)
+    private static function flush_now_type_to_colour(string $type) : string
     {
         switch ($type) {
             case 'created':
@@ -183,7 +183,7 @@ trait FlushNow
             case 'heading':
                 return 'pink';
             default:
-                return '';
+                return $type;
         }
     }
 }
