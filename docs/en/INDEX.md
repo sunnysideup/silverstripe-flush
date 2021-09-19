@@ -36,4 +36,4 @@ class AnotherClass
 }
 ```
 
-_note that we make use of FlushNow having been added to MyClass_
+_note that we make use of FlushNow Trait added to MyClass_
