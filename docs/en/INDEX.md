@@ -20,7 +20,7 @@ class MyClass
 
 ```
 
-and then you can also do (note that we make use of FlushNow having been added to MyClass). 
+and then you can also do: 
 
 ```php
 
@@ -35,3 +35,5 @@ class AnotherClass
 
 }
 ```
+
+_note that we make use of FlushNow having been added to MyClass_
