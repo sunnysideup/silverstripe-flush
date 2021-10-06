@@ -163,7 +163,7 @@ trait FlushNow
         return $htmlColour;
     }
 
-    private static function flush_now_type_to_colour(string $type) : string
+    private static function flush_now_type_to_colour(string $type): string
     {
         switch ($type) {
             case 'created':
