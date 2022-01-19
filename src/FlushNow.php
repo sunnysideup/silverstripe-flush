@@ -7,21 +7,24 @@ use SilverStripe\ORM\DB;
 
 trait FlushNow
 {
+
+    public static function flush_return(string $message, ?string $type = '', ?bool $bullet = true) : string
+    {
+        $isCli = Director::is_cli();
+        $message = self::do_flush_inner($message, $type, $bullet, $isCli);
+        if($isCli) {
+            return $message ."\n";
+        } else {
+            return '<p>'.$message.'</p>';
+        }
+    }
+
     public static function do_flush(string $message, ?string $type = '', ?bool $bullet = true)
     {
         $isCli = Director::is_cli();
-        if (! is_string($message)) {
-            $message = '<pre>' . print_r($message, 1) . '</pre>';
-        }
+        $message = self::do_flush_inner($message, $type, $bullet, $isCli);
         if (! $isCli) {
             self::flushBuffer();
-        }
-        $colour = self::flush_now_type_to_colour($type);
-        $colour = self::flush_now_colour_for_mode($colour, $isCli);
-        if ($isCli) {
-            $message = "\033[" . $colour . ' ' . strip_tags($message) . "\033[0m";
-        } else {
-            $message = '<span style="color: ' . $colour . '">' . $message . '</span>';
         }
         if ($bullet && ! $isCli) {
             DB::alteration_message($message, $type);
@@ -31,6 +34,23 @@ trait FlushNow
             echo '<hr/>';
             echo $message;
         }
+    }
+
+    private static function do_flush_inner(string $message, ?string $type = '', ?bool $bullet = true, ?bool $isCli = false) : string
+    {
+        $isCli = Director::is_cli();
+        if (! is_string($message)) {
+            $message = '<pre>' . print_r($message, 1) . '</pre>';
+        }
+        $colour = self::flush_now_type_to_colour($type);
+        $colour = self::flush_now_colour_for_mode($colour, $isCli);
+        if ($isCli) {
+            $message = "\033[" . $colour . ' ' . strip_tags($message) . "\033[0m";
+        } else {
+            $message = '<span style="color: ' . $colour . '">' . $message . '</span>';
+        }
+
+        return $message;
     }
 
     public static function do_flush_heading(string $message)
