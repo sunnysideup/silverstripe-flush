@@ -57,6 +57,20 @@ trait FlushNow
     /**
      * output a line.
      */
+    protected function flushNowNewLine()
+    {
+        $isCli = Director::is_cli();
+        if ($isCli) {
+            echo "\r\n";
+        } else {
+            echo '<br />';
+        }
+        $this->flushBuffer();
+    }
+
+    /**
+     * output a line.
+     */
     protected function flushNowLine()
     {
         self::do_flush('--------------------------------------------------------');
