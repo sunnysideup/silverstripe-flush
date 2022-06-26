@@ -9,9 +9,8 @@ trait FlushNow
 {
     public static function flush_return(string $message, ?string $type = '', ?bool $bullet = true): string
     {
-        $isCli = Director::is_cli();
-        $message = self::do_flush_inner($message, $type, $bullet, $isCli);
-        if ($isCli) {
+        $message = self::do_flush_inner($message, $type, $bullet, Director::is_cli());
+        if (Director::is_cli()) {
             return $message . "\n";
         }
 
@@ -37,9 +36,13 @@ trait FlushNow
 
     public static function do_flush_heading(string $message)
     {
-        self::do_flush('--------------------------------------------------------', 'heading', false);
-        self::do_flush($message, 'heading', false);
-        self::do_flush('--------------------------------------------------------', 'heading', false);
+        if(Director::is_cli()) {
+            self::do_flush('--------------------------------------------------------', 'heading', false);
+            self::do_flush($message, 'heading', false);
+            self::do_flush('--------------------------------------------------------', 'heading', false);
+        } else {
+            self::do_flush('<h3>'.$message.'</h3><hr />', 'heading', false);
+        }
     }
 
     protected static function flushBuffer()
@@ -181,13 +184,12 @@ trait FlushNow
 
     private static function do_flush_inner(string $message, ?string $type = '', ?bool $bullet = true, ?bool $isCli = false): string
     {
-        $isCli = Director::is_cli();
         if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
         }
-        $colour = self::flush_now_type_to_colour($type);
-        $colour = self::flush_now_colour_for_mode($colour, $isCli);
-        if ($isCli) {
+        $colour = self::flush_now_type_to_colour($type, Director::is_cli());
+        $colour = self::flush_now_colour_for_mode($colour, Director::is_cli());
+        if (Director::is_cli()) {
             $message = "\033[" . $colour . ' ' . strip_tags($message) . "\033[0m";
         } else {
             $message = '<span style="color: ' . $colour . '">' . $message . '</span>';
@@ -214,9 +216,11 @@ trait FlushNow
             case 'bad':
                 return 'red';
             case 'heading':
-                return 'pink';
+                return Director::is_cli() ? 'pink' : 'brown';
             default:
                 return $type;
         }
     }
+
+
 }
