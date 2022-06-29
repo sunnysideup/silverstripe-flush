@@ -24,6 +24,7 @@ trait FlushNow
         if (! $isCli) {
             self::flushBuffer();
         }
+
         if ($bullet && ! $isCli) {
             DB::alteration_message($message, $type);
         } elseif ($isCli) {
@@ -36,12 +37,12 @@ trait FlushNow
 
     public static function do_flush_heading(string $message)
     {
-        if(Director::is_cli()) {
+        if (Director::is_cli()) {
             self::do_flush('--------------------------------------------------------', 'heading', false);
             self::do_flush($message, 'heading', false);
             self::do_flush('--------------------------------------------------------', 'heading', false);
         } else {
-            self::do_flush('<h3>'.$message.'</h3><hr />', 'heading', false);
+            self::do_flush('<h3>' . $message . '</h3><hr />', 'heading', false);
         }
     }
 
@@ -54,6 +55,7 @@ trait FlushNow
             @flush();
             @ob_end_flush();
         }
+
         @ob_start();
     }
 
@@ -68,6 +70,7 @@ trait FlushNow
         } else {
             echo '<br />';
         }
+
         $this->flushBuffer();
     }
 
@@ -93,7 +96,7 @@ trait FlushNow
 
     protected static function flush_now_colour_for_mode(string $colour, ?bool $isCli = true): string
     {
-        $htmlColour = str_replace('_', '', $colour);
+        $htmlColour = str_replace(\_::class, '', $colour);
         $htmlColour = str_replace('-', '', $htmlColour);
         switch ($colour) {
             case 'black':
@@ -175,6 +178,7 @@ trait FlushNow
 
                 break;
         }
+
         if ($isCli) {
             return $colour;
         }
@@ -187,7 +191,8 @@ trait FlushNow
         if (! is_string($message)) {
             $message = '<pre>' . print_r($message, 1) . '</pre>';
         }
-        $colour = self::flush_now_type_to_colour($type, Director::is_cli());
+
+        $colour = self::flush_now_type_to_colour($type);
         $colour = self::flush_now_colour_for_mode($colour, Director::is_cli());
         if (Director::is_cli()) {
             $message = "\033[" . $colour . ' ' . strip_tags($message) . "\033[0m";
@@ -221,6 +226,4 @@ trait FlushNow
                 return $type;
         }
     }
-
-
 }
