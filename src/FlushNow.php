@@ -39,6 +39,7 @@ trait FlushNow
     {
         if (Director::is_cli()) {
             self::do_flush('--------------------------------------------------------', 'heading', false);
+            self::do_flush('', 'heading', false);
             self::do_flush($message, 'heading', false);
             self::do_flush('--------------------------------------------------------', 'heading', false);
         } else {
