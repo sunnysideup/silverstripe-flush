@@ -48,7 +48,7 @@ trait FlushNow
 
     protected static function flushBuffer()
     {
-        echo '';
+        echo ' ';
         // check that buffer is actually set before flushing
         if (ob_get_length()) {
             @ob_flush();
