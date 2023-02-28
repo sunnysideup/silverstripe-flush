@@ -199,10 +199,10 @@ trait FlushNow
             $message = str_replace('<br />', "\n", $message);
             $message = str_replace('<br>', "\n", $message);
             $message = str_replace('<p>', "\n", $message);
-            $message = strip_tags($message);
+            $message = strip_tags( (string) $message);
             // https://stackoverflow.com/questions/37203694/remove-spaces-at-the-start-of-each-line-in-a-multiline-string-variable
             $message = preg_replace('/^ +/m', '', (string) $message);
-            $message = "\033[" . $colour . ' ' . strip_tags($message) . "\033[0m";
+            $message = "\033[" . $colour . ' ' . strip_tags( (string) $message) . "\033[0m";
         } else {
             $message = '<span style="color: ' . $colour . '">' . $message . '</span>';
         }
