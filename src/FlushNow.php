@@ -97,7 +97,7 @@ trait FlushNow
 
     protected static function flush_now_colour_for_mode(string $colour, ?bool $isCli = true): string
     {
-        $htmlColour = str_replace('_', '', (string) $colour);
+        $htmlColour = str_replace('_', '', $colour);
         $htmlColour = str_replace('-', '', (string) $htmlColour);
         switch ($colour) {
             case 'black':
@@ -159,6 +159,7 @@ trait FlushNow
 
                 break;
             case 'white':
+            default:
                 $colour = '1;37m';
 
                 break;
@@ -172,10 +173,6 @@ trait FlushNow
             case 'light_purple':
                 $colour = '1;35m';
                 $htmlColour = 'violet';
-
-                break;
-            default:
-                $colour = '1;37m';
 
                 break;
         }
@@ -199,10 +196,10 @@ trait FlushNow
             $message = str_replace('<br />', "\n", $message);
             $message = str_replace('<br>', "\n", $message);
             $message = str_replace('<p>', "\n", $message);
-            $message = strip_tags( (string) $message);
+            $message = strip_tags((string) $message);
             // https://stackoverflow.com/questions/37203694/remove-spaces-at-the-start-of-each-line-in-a-multiline-string-variable
-            $message = preg_replace('/^ +/m', '', (string) $message);
-            $message = "\033[" . $colour . ' ' . strip_tags( (string) $message) . "\033[0m";
+            $message = preg_replace('/^ +/m', '', $message);
+            $message = "\033[" . $colour . ' ' . strip_tags((string) $message) . "\033[0m";
         } else {
             $message = '<span style="color: ' . $colour . '">' . $message . '</span>';
         }
