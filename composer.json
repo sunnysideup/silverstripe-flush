@@ -1,33 +1,33 @@
 {
-  "name": "sunnysideup/flush",
-  "type": "silverstripe-vendormodule",
-  "description": "DB::alteration_message on steroids.",
-  "keywords": [
-    "Silverstripe-CMS",
-    "CMS",
-    "Silverstripe",
-    "flush",
-    "alteration_message",
-    "DB",
-    "command line",
-    "output",
-    "flush"
-  ],
-  "license": "BSD-3-Clause",
-  "authors": [
-    {
-      "name": "Nicolaas Francken",
-      "email": "modules@sunnysideup.co.nz",
-      "role": "lead developer"
+    "name": "sunnysideup/flush",
+    "type": "silverstripe-vendormodule",
+    "description": "DB::alteration_message on steroids.",
+    "keywords": [
+        "Silverstripe-CMS",
+        "CMS",
+        "Silverstripe",
+        "flush",
+        "alteration_message",
+        "DB",
+        "command line",
+        "output",
+        "flush"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Nicolaas Francken",
+            "email": "modules@sunnysideup.co.nz",
+            "role": "lead developer"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "^6.0"
+    },
+    "extra": [],
+    "autoload": {
+        "psr-4": {
+            "Sunnysideup\\Flush\\": "src/"
+        }
     }
-  ],
-  "require": {
-    "silverstripe/framework": "^4.0 || ^5.0"
-  },
-  "extra": [],
-  "autoload": {
-    "psr-4": {
-      "Sunnysideup\\Flush\\": "src/"
-    }
-  }
 }

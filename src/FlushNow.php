@@ -209,25 +209,14 @@ trait FlushNow
 
     private static function flush_now_type_to_colour(string $type): string
     {
-        switch ($type) {
-            case 'created':
-            case 'good':
-                return 'green';
-            case 'changed':
-            case 'info':
-                return 'orange';
-            case 'obsolete':
-                return 'purple';
-            case 'repaired':
-                return 'blue';
-            case 'deleted':
-            case 'error':
-            case 'bad':
-                return 'red';
-            case 'heading':
-                return Director::is_cli() ? 'pink' : 'brown';
-            default:
-                return $type;
-        }
+        return match ($type) {
+            'created', 'good' => 'green',
+            'changed', 'info' => 'orange',
+            'obsolete' => 'purple',
+            'repaired' => 'blue',
+            'deleted', 'error', 'bad' => 'red',
+            'heading' => Director::is_cli() ? 'pink' : 'brown',
+            default => $type,
+        };
     }
 }
